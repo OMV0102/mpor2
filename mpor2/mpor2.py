@@ -1,6 +1,7 @@
 
 from cvxopt.modeling import op
 from cvxopt.modeling import variable
+from scipy.optimize import linprog
 #######################################################
 # Решение задачи по стоимости перевозки (Критерий 1)
 #######################################################
@@ -33,8 +34,8 @@ problem1.status
 print("Результат:")
 print(x1.value)
 print("Стоимость доставки:")
-print(problem1.objective.value()[0])
-print("\n")
+s1 = problem1.objective.value()[0]
+print(s1, "\n")
 
 
 #######################################################
@@ -70,18 +71,22 @@ problem2.status
 print("Результат:")
 print(x2.value)
 print("Время доставки:")
-print(problem2.objective.value()[0])
-print("\n")
+s2 = problem2.objective.value()[0]
+print(s2, '\n')
 
 #######################################################
-# Решение задачи по стоимсоти и времени (оба критерия)
+# Решение задачи по стоимости и времени (оба критерия)
 #######################################################
 
 w = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-w_ = w[0]
+w_ = w[4]
 
-
-
+#x3 = variable(20, 'x3')
+z = 0.0
+print('z :')
+for i in range(0,20):
+    z = (w_*(s1-x1.value[i])/s1) + ((1.0-w_)*(s2-x1.value[i])/s2)
+    print(z)
 
 
 
