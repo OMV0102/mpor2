@@ -87,6 +87,8 @@ print("ИТОГ:")
 s3 = problem3.objective.value()[0]
 print(s3, "\n")
 
+
+#считаются F1 и F2 каждая от общего вектора X
 z1_x = 0.0
 z2_x = 0.0
 
