@@ -1,6 +1,7 @@
 
 from cvxopt.modeling import op
 from cvxopt.modeling import variable
+import numpy as np
 # вектор решения
 x = variable(20, 'x')
 # ограничения по заводам
@@ -92,14 +93,25 @@ print(s3, "\n")
 z1_x = 0.0
 z2_x = 0.0
 
+#for i in range(0,20):
+#    z1_x += (c1[i] * x.value[i])
+#    z2_x += (c2[i] * x.value[i])
+
+#print('z1(x) = ', z1_x)
+#print('z2(x) = ', z2_x)
+#ee
+#
+r = []
+
 for i in range(0,20):
-    z1_x += (c1[i] * x.value[i])
-    z2_x += (c2[i] * x.value[i])
+    r.append(x.value[i] + np.random.randint(0,5))
 
-print('z1(x) = ', z1_x)
-print('z2(x) = ', z2_x)
+print(r)
 
 
+if(r[0] + r[1] + r[2] + r[3] + r[4] <= 4)
+    
+else 
 #z = 0.0
 #print('z :')
 #for i in range(0,20):
