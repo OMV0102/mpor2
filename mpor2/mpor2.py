@@ -1,7 +1,11 @@
-
 from cvxopt.modeling import op
 from cvxopt.modeling import variable
 import numpy as np
+import matplotlib.pyplot as plt
+
+#################################
+# Начальные условия и ограничения
+#################################
 # вектор решения
 x = variable(20, 'x')
 # ограничения по заводам
@@ -17,15 +21,10 @@ limit8 = (x[3] + x[8] + x[13] + x[18] == 7)
 limit9 = (x[4] + x[9] + x[14] + x[19] == 2)
 # ограничения на неотрицательность
 x_positive = (x >= 0)
-# ограничение на объем перевозок
-'''limit10 = (x[0] + x[1] +x[2] + x[3] + x[4] +
-          x[5] + x[6] + x[7] + x[8] + x[9] +
-          x[10] + x[11] + x[12] + x[13] + x[14] + 
-          x[15] + x[16] + x[17] + x[18] + x[19] <= 30)'''
 
-#######################################################
+####################################################
 # Решение задачи по стоимости перевозки (Критерий 1)
-#######################################################
+####################################################
 
 c1 = [160,300,170,100,160,
     300,270,260,90,230,
@@ -47,9 +46,9 @@ print("Стоимость доставки:")
 s1 = problem1.objective.value()[0]
 print(s1, "\n")
 
-#######################################################
+##################################################
 # Решение задачи по времени перевозки (Критерий 2)
-#######################################################
+##################################################
 
 c2 = [3,5,1,8,2,
     4,5,3,7,2,
@@ -89,32 +88,62 @@ s3 = problem3.objective.value()[0]
 print(s3, "\n")
 
 
+##########################################################
+# Подстановка вектора X, найденного при совместном решении
+##########################################################
 #считаются F1 и F2 каждая от общего вектора X
 z1_x = 0.0
 z2_x = 0.0
+for i in range(0,20):
+    z1_x += (c1[i] * x.value[i])
+    z2_x += (c2[i] * x.value[i])
 
-#for i in range(0,20):
-#    z1_x += (c1[i] * x.value[i])
-#    z2_x += (c2[i] * x.value[i])
+print('z1(x) = ', z1_x)
+print('z2(x) = ', z2_x)
 
-#print('z1(x) = ', z1_x)
-#print('z2(x) = ', z2_x)
-#ee
-#
+
+##########################################
+# Генерация случайного X
+# График с точка
+# Нахождение парето-оптимального множества
+##########################################
+
+N = 100
+Count = 0
+lim_check = True
 r = []
 
+# генерируем 20 значений (вектор X)
 for i in range(0,20):
     r.append(x.value[i] + np.random.randint(0,5))
-
 print(r)
 
+lim_check = True
+if ((r[0] + r[1] + r[2] + r[3] + r[4]) > 4):
+    lim_check = False
+#else 
 
-if(r[0] + r[1] + r[2] + r[3] + r[4] <= 4)
-    
-else 
-#z = 0.0
-#print('z :')
-#for i in range(0,20):
-#    z = (w_*(s1-x1.value[i])/s1) + ((1.0-w_)*(s2-x2.value[i])/s2)
-#    print(z)
+print('lim_check =', lim_check)
 
+#####################################################################################
+from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,
+                               AutoMinorLocator)
+import numpy as np
+x = np.linspace(0, 10, 11)
+y1 = 4*x
+
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.set_title("График", fontsize=16)
+ax.set_xlabel("F1(x)", fontsize=14)        
+ax.set_ylabel("F2(x)", fontsize=14)
+ax.grid(which="major", color="black", linewidth=1.0)
+ax.grid(which="minor", linestyle="--", color="gray", linewidth=0.5)
+
+#ax.legend()
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+ax.yaxis.set_minor_locator(AutoMinorLocator())
+
+ax.tick_params(which='major', length=10, width=2)
+ax.tick_params(which='minor', length=5, width=1)
+ax.scatter(x, y1, c="red", label="y1 = 4*x")
+plt.show()
