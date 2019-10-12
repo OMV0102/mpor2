@@ -124,6 +124,16 @@ if ((r[0] + r[1] + r[2] + r[3] + r[4]) > 4):
 #else 
 
 print('lim_check =', lim_check)
+#######################################
+matr = [[],[],[],[],[]]
+ij = 0
+for i in range(4):
+    for j in range(5):
+        matr[i].append(r[ij])
+        ij += 1
+
+print(matr[0][3])
+#########################################
 
 #####################################################################################
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,
