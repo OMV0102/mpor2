@@ -98,8 +98,8 @@ for i in range(0,20):
     z1_x += (c1[i] * x.value[i])
     z2_x += (c2[i] * x.value[i])
 
-print('z1(x) = ', z1_x)
-print('z2(x) = ', z2_x)
+#print('z1(x) = ', z1_x)
+#print('z2(x) = ', z2_x)
 
 
 ##########################################
@@ -108,23 +108,72 @@ print('z2(x) = ', z2_x)
 # Нахождение парето-оптимального множества
 ##########################################
 
-N = 100
+N = 20
 Count = 0
-lim_check = True
-r = []
 
+
+#r = [0.0, 0.0, 4.0, 0.0, 0.0,
+#     0.0, 0.0, 0.0, 6.0, 0.0,
+#     0.0, 7.0, 0.0, 1.0, 2.0,
+#     7.0, 0.0, 3.0, 0.0, 0.0]
+
+r = [0.0, 0.0, 4.0, 0.0, 0.0,
+     0.0, 0.0, 0.0, 6.0, 0.0,
+     0.0, 7.0, 0.0, 1.0, 2.0,
+     7.0, 0.0, 3.0, 0.0, 0.0]
+
+rand = 0
+flag = True
 # генерируем 20 значений (вектор X)
+
+print('\nВектор X =\n', r, '\n')
+
+check1 = False
+check2 = False
+check3 = False
+check4 = False
+check5 = False
+check6 = False
+check7 = False
+check8 = False
+check9 = False
+check10 = True
+
+#Проверка вектора на ограничение
+if ((r[0] + r[1] + r[2] + r[3] + r[4]) <= 4):
+    check1 = True
+if ((r[5] + r[6] +r[7] + r[8] + r[9]) <= 6):
+    check2 = True
+if ((r[10] + r[11] + r[12] + r[13] + r[14]) <= 10):
+    check3 = True
+if ((r[15] + r[16] + r[17] + r[18] + r[19]) <= 10):
+    check4 = True
+if ((r[0] + r[5] + r[10] + r[15]) == 7):
+    check5 = True
+if ((r[1] + r[6] + r[11] + r[16]) == 7):
+    check6 = True
+if ((r[2] + r[7] + r[12] + r[17]) == 7):
+    check7 = True
+if ((r[3] + r[8] + r[13] + r[18]) == 7):
+    check8 = True
+if ((r[4] + r[9] + r[14] + r[19]) == 2):
+    check9 = True
 for i in range(0,20):
-    r.append(x.value[i] + np.random.randint(0,5))
-print(r)
+    if(r[i] < 0):
+        check10 = False
 
-lim_check = True
-if ((r[0] + r[1] + r[2] + r[3] + r[4]) > 4):
-    lim_check = False
-#else 
+if (check1 and check2 and check3 and check4 and check5 
+    and check6 and check7 and check8 and check9 and check10):
+    print('Проверка вектора на ограничение = ПРОВЕРКА ПРОШЛА")
+else:
+    print('lim_check =', lim_check)
 
-print('lim_check =', lim_check)
+
+
 #######################################
+
+
+
 matr = [[],[],[],[],[]]
 ij = 0
 for i in range(4):
@@ -132,7 +181,7 @@ for i in range(4):
         matr[i].append(r[ij])
         ij += 1
 
-print(matr[0][3])
+#print(matr[0][3])
 #########################################
 
 #####################################################################################
@@ -156,4 +205,4 @@ ax.yaxis.set_minor_locator(AutoMinorLocator())
 ax.tick_params(which='major', length=10, width=2)
 ax.tick_params(which='minor', length=5, width=1)
 ax.scatter(x, y1, c="red", label="y1 = 4*x")
-plt.show()
+#plt.show()
