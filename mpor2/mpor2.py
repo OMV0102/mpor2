@@ -106,7 +106,7 @@ print('==========================================================\n\n')
 
 ##########################################
 # Генерация случайного X
-# График с точка
+# График точечный
 # Нахождение парето-оптимального множества
 ##########################################
 
@@ -122,15 +122,19 @@ check7 = False
 check8 = False
 check9 = False
 check10 = True
-#r = [0.0, 0.0, 4.0, 0.0, 0.0,
-#     0.0, 0.0, 0.0, 6.0, 0.0,
-#     0.0, 7.0, 0.0, 1.0, 2.0,
-#     7.0, 0.0, 3.0, 0.0, 0.0]
+#изначальный вектор при совместном решении
+#r = [0.0, 0.0, 4.0, 0.0, 0.0, #<= 4
+#     0.0, 0.0, 0.0, 6.0, 0.0, #<= 6
+#     0.0, 7.0, 0.0, 1.0, 2.0, #<= 10
+#     7.0, 0.0, 3.0, 0.0, 0.0] #<= 10
+#     ||   ||   ||   ||   ||
+#      7    7    7    7    2
 
-r = [0.0, 0.0, 4.0, 0.0, 0.0, #<= 4
-     0.0, 0.0, 0.0, 6.0, 0.0, #<= 6
-     0.0, 7.0, 0.0, 1.0, 2.0, #<= 10
-     7.0, 0.0, 3.0, 0.0, 0.0] #<= 10
+#изменяем вектор и проверяем на ограничения
+r = [2.0, 0.0, 1.0, 0.0, 1.0, #<= 4
+     5.0, 0.0, 0.0, 1.0, 0.0, #<= 6
+     0.0, 4.0, 3.0, 1.0, 1.0, #<= 10
+     0.0, 3.0, 2.0, 5.0, 0.0] #<= 10
 #     ||   ||   ||   ||   ||
 #      7    7    7    7    2
 
@@ -174,39 +178,3 @@ print('z2(r) = ', z2_r, '\n')
 
 print('\nВектор r =\n', r, '\n')
 
-#######################################
-
-
-
-matr = [[],[],[],[],[]]
-ij = 0
-for i in range(4):
-    for j in range(5):
-        matr[i].append(r[ij])
-        ij += 1
-
-#print(matr[0][3])
-#########################################
-
-#####################################################################################
-from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,
-                               AutoMinorLocator)
-import numpy as np
-x = np.linspace(0, 10, 11)
-y1 = 4*x
-
-fig, ax = plt.subplots(figsize=(8, 6))
-ax.set_title("График", fontsize=16)
-ax.set_xlabel("F1(x)", fontsize=14)        
-ax.set_ylabel("F2(x)", fontsize=14)
-ax.grid(which="major", color="black", linewidth=1.0)
-ax.grid(which="minor", linestyle="--", color="gray", linewidth=0.5)
-
-#ax.legend()
-ax.xaxis.set_minor_locator(AutoMinorLocator())
-ax.yaxis.set_minor_locator(AutoMinorLocator())
-
-ax.tick_params(which='major', length=10, width=2)
-ax.tick_params(which='minor', length=5, width=1)
-ax.scatter(x, y1, c="red", label="y1 = 4*x")
-#plt.show()
